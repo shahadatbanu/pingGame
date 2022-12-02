@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: inherit;
+      }
+      html {
+        font-size: 62.5%;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 400px;
+        color: black;
+        background-image: url("https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=412&q=80");
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      main {
+        position: relative;
+        width: 100rem;
+        height: 60rem;
+        background-color: rgba(255, 255, 255, 0.35);
+        display: flex;
+      }
+      .player {
+        flex: 50%;
+        padding: 9rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: all 0.75s;
+        text-shadow: 0 5px 10px white;
+      }
+      .name {
+        position: relative;
+        font-size: 25px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        word-spacing: 2px;
+        font-weight: 30;
+        margin-bottom: 1rem;
+      }
+      .image1 {
+        width: 100px;
+        border: none;
+        border-radius: 50%;
+        margin-left: 20px;
+        border-style: inset;
+      }
+      .score {
+        font-size: 8rem;
+        font-weight: 300;
+        color: white;
+        margin-bottom: auto;
+        text-shadow: 0 5px 10px black;
+      }
+      .player--active {
+        background-color: rgba(125, 125, 248, 0.3);
+      }
+      /* .player--active .name {
+        font-weight: 700;
+      }
+      .player--active .score {
+        font-weight: 400;
+      }
+
+      .player--active .current {
+        opacity: 1;
+      } */
+
+      .dice {
+        position: absolute;
+        margin-left: 500px;
+        top: 16.5rem;
+        transform: translateX(-50%);
+        height: 10rem;
+        box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.2);
+      }
+      .current {
+        background-color: rgba(000, 000, 000, 0.6);
+        border-radius: 9px;
+        color: white;
+        width: 200px;
+        padding: 3rem;
+        text-align: center;
+        transition: all 0.75s;
+      }
+      .current-label {
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+        font-size: 1.7rem;
+        color: white;
+      }
+      .current-score {
+        font-size: 40px;
+      }
+      .btn {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #444;
+        background: none;
+        border: none;
+        font-family: inherit;
+        font-size: 1.8rem;
+        text-transform: uppercase;
+        cursor: pointer;
+        font-weight: 400;
+        transition: all 0.2s;
+
+        background-color: white;
+        background-color: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(10px);
+
+        padding: 0.7rem 2.5rem;
+        border-radius: 50rem;
+        box-shadow: 0 1.75rem 3.5rem rgba(0, 0, 0, 0.1);
+      }
+      .btn::first-letter {
+        font-size: 2.4rem;
+        display: inline-block;
+        margin-right: 0.7rem;
+      }
+
+      .btn--new {
+        top: 4rem;
+      }
+      .btn--roll {
+        top: 39.3rem;
+      }
+      .btn--hold {
+        top: 46.1rem;
+      }
+
+      .btn:active {
+        transform: translate(-50%, 3px);
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+      }
+
+      .btn:focus {
+        outline: none;
+      }
+      .player--winner {
+        background-color: rgb(000, 000, 000, 0.5);
+      }
+      .player--winner .name {
+        font-weight: 700;
+        color: black;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="player player--0 player--active">
+        <h2 class="name" id="name--0">Player 1</h2>
+        <div>
+          <img
+            class="image1"
+            src="https://i.pinimg.com/474x/e5/0c/1d/e50c1d3835400d1a1cd4363eae694105.jpg"
+          />
+        </div>
+        <p class="score" id="score--0">43</p>
+        <div class="current">
+          <p class="current-label">Current</p>
+          <p class="current-score" id="current--0">0</p>
+        </div>
+      </section>
+      <section class="player player--1">
+        <h2 class="name" id="name--1">Player 2</h2>
+        <div>
+          <img
+            class="image1"
+            src="https://i.pinimg.com/550x/e3/0b/ca/e30bcaff86a4258a1b799ca60c8c49a4.jpg"
+          />
+        </div>
+        <p class="score" id="score--1">24</p>
+        <div class="current">
+          <p class="current-label">Current</p>
+          <p class="current-score" id="current--1">0</p>
+        </div>
+      </section>
+      <img src="di6.png" class="dice" />
+      <button class="btn btn--new">🔄 New game</button>
+      <button class="btn btn--roll">🎲 Roll dice</button>
+      <button class="btn btn--hold">📥 Hold</button>
+    </main>
+  </body>
+  <script>
+    "use strict";
+    const player0El = document.querySelector(".player--0");
+    const player1El = document.querySelector(".player--1");
+    const scoreEl1 = document.getElementById("score--0");
+    const scoreEl2 = document.getElementById("score--1");
+    const diceEl = document.querySelector(".dice");
+    const btnNew = document.querySelector(".btn--new");
+    const btnRoll = document.querySelector(".btn--roll");
+    const btnHold = document.querySelector(".btn--hold");
+    const currentE0 = document.getElementById("current--0");
+    const currentE1 = document.getElementById("current--1");
+    let scores, playing, currentScore, activePlayer;
+    function init() {
+      scores = [0, 0];
+      playing = true;
+      currentScore = 0;
+      activePlayer = 0;
+      diceEl.classList.add("hidden");
+      scoreEl1.textContent = 0;
+      scoreEl2.textContent = 0;
+      currentE0.textContent = 0;
+      currentE1.textContent = 0;
+      player0El.classList.remove("player--winner");
+      player1El.classList.remove("player--winner");
+      player0El.classList.add("player--active");
+      player1El.classList.remove("player--active");
+    }
+    init();
+    //function to switch the player
+    function switchPlayer() {
+      document.getElementById(`current--${activePlayer}`).textContent = 0;
+      currentScore = 0;
+      activePlayer = activePlayer === 0 ? 1 : 0;
+    }
+
+    btnRoll.addEventListener("click", function () {
+      if (playing) {
+        //genrate a random number
+        const dice = Math.trunc(Math.random() * 6) + 1;
+        //display the dice
+        diceEl.classList.remove("hidden");
+        diceEl.src = `di${dice}.png`;
+        //check the dice number will be one
+        if (dice !== 1) {
+          currentScore += dice;
+          document.getElementById(`current--${activePlayer}`).textContent =
+            currentScore;
+        } else {
+          switchPlayer();
+          player0El.classList.toggle("player--active");
+          player1El.classList.toggle("player--active");
+        }
+      }
+    });
+
+    btnHold.addEventListener("click", function () {
+      if (playing) {
+        //Add current score to active playrs score
+        scores[activePlayer] += currentScore;
+        document.getElementById(`score--${activePlayer}`).textContent =
+          scores[activePlayer];
+        //check the player scores is >=100
+        if (scores[activePlayer] >= 100) {
+          //finsih the game
+          playing = false;
+          diceEl.classList.add("hidden");
+          document
+            .querySelector(`.player--${activePlayer}`)
+            .classList.add("player--winner");
+          document
+            .querySelector(`.player--${activePlayer}`)
+            .classList.remove("player--active");
+        } else {
+          switchPlayer();
+          player0El.classList.toggle("player--active");
+          player1El.classList.toggle("player--active");
+        }
+      }
+    });
+    btnNew.addEventListener("click", function () {
+      init();
+    });
+  </script>
+</html>
